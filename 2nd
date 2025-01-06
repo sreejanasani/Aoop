@@ -1,0 +1,75 @@
+// Step 1: Define the Payment Interface
+interface Payment {
+    void processPayment(double amount);
+}
+
+// Step 2: Create Concrete Payment Classes
+class CreditCardPayment implements Payment {
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing credit card payment of $" + amount);
+    }
+}
+
+class PayPalPayment implements Payment {
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing PayPal payment of $" + amount);
+    }
+}
+
+class BankTransferPayment implements Payment {
+    @Override
+    public void processPayment(double amount) {
+        System.out.println("Processing bank transfer payment of $" + amount);
+    }
+}
+
+// Step 3: Create the PaymentFactory (Factory Method)
+abstract class PaymentFactory {
+    public abstract Payment createPayment();
+}
+
+class CreditCardPaymentFactory extends PaymentFactory {
+    @Override
+    public Payment createPayment() {
+        return new CreditCardPayment();
+    }
+}
+
+class PayPalPaymentFactory extends PaymentFactory {
+    @Override
+    public Payment createPayment() {
+        return new PayPalPayment();
+    }
+}
+
+class BankTransferPaymentFactory extends PaymentFactory {
+    @Override
+    public Payment createPayment() {
+        return new BankTransferPayment();
+    }
+}
+
+// Step 4: Demonstrate the Factory Method in the Main Class
+public class EcommerceApplication {
+    public static void main(String[] args) {
+        // Use the factory to create and process payments dynamically
+        PaymentFactory paymentFactory;
+
+        // Example 1: Credit Card Payment
+        paymentFactory = new CreditCardPaymentFactory();
+        Payment creditCardPayment = paymentFactory.createPayment();
+        creditCardPayment.processPayment(100.0);
+
+        // Example 2: PayPal Payment
+        paymentFactory = new PayPalPaymentFactory();
+        Payment payPalPayment = paymentFactory.createPayment();
+        payPalPayment.processPayment(200.0);
+
+        // Example 3: Bank Transfer Payment
+        paymentFactory = new BankTransferPaymentFactory();
+        Payment bankTransferPayment = paymentFactory.createPayment();
+        bankTransferPayment.processPayment(300.0);
+    }
+}
